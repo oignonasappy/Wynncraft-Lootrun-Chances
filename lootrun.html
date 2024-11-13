@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mythic確率計算機</title>
+    
+    <style>
+        body{
+            background-color: rgb(32, 32, 32);
+            color: white;
+        }
+        a{
+            color: rgb(64, 192, 255);
+        }
+        article{
+            line-height: 12px;
+            margin-left: 10px;
+        }
+        footer{
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            margin-top: 120px;
+            text-align: right;
+            font-size: 75%;
+        }
+        .main{
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            height: 150px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgb(30, 30, 30);
+            border: 1px solid rgb(34, 34, 34);
+            border-radius: 24px;
+        }
+        .in{
+            flex: 1;
+            border: 1px solid rgb(34, 34, 34);
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 18px;
+            
+        }
+        .out{
+            flex: 1.5;
+            border: 1px solid rgb(34, 34, 34);
+            padding: 10px;
+            border-radius: 12px;
+        }
+        #chance{
+            font-size: 250%;
+            color: rgb(192, 128, 192);
+        }
+    </style>
+</head>
+<body>
+    <!--カオス--><h1 style="text-align: center;"><a href="https://youtu.be/dQw4w9WgXcQ"><img src="data:image/webp;base64,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" alt="Mythic" width="40" height="40"></a>LootRun Mythic確率<a href="https://youtu.be/dQw4w9WgXcQ"><img src="data:image/webp;base64,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" alt="Mythic" width="40" height="40"></a></h1>
+    <p style="margin-left: 10px; font-size: 80%; color: rgb(160,160,160);">一つ以上出る確率を求めます</p>
+
+    <div class="main">
+        <div class="in">
+            <form action="">
+                <label for="pull">Pull数&ensp;&ensp;&ensp;-></label>
+                <input type="number" id="pull" min="0" value="100"><br>
+                <label for="reroll">Reroll数&ensp;-></label>
+                <input type="number" id="reroll" min="0" value="0">
+            </form>
+        </div>
+        <div class="out">
+            <output>
+                <p>Mythic確率は...<span id="chance">3.92182%</span></p>
+            </output>
+        </div>
+    </div>
+    
+    <article>
+        <p>Mythicの出現確率はPull毎に[約0.04%, 2500分の1]</p>
+        <p>計算式: 1 - ((1 - 0.0004) ^ (Pull数 * (Reroll数 + 1)))</p>
+        <p>参考: <a href="https://wynncraft.wiki.gg/wiki/Lootrunning#Rewards" target="_blank" rel="noopener noreferrer">公式Wiki</a></p>
+    </article>
+
+    <footer>
+        <p>あなたの幸運をお祈りしています。　<a href="https://youtu.be/dQw4w9WgXcQ" style="color: white;">たまねぎ</a></p>
+    </footer>
+
+    <script>
+        const pull = document.querySelector("#pull");
+        const reroll = document.querySelector("#reroll");
+        const out = document.querySelector("#chance");
+
+        pull.addEventListener("input", changed);
+        reroll.addEventListener("input", changed);
+
+        function changed(event) {
+            const pValue = pull.value;
+            const rValue = reroll.value;
+            console.log("pull "+pValue);
+            console.log("reroll "+rValue);
+            // 確率
+            let retVal = ((1 - (0.9996 ** ((parseInt(rValue) + 1) * parseInt(pValue)))) * 100).toFixed(5) + "%";
+            out.innerHTML = retVal;
+        }
+    </script>
+</body>
+</html>
